@@ -28,7 +28,7 @@ db = Chroma.from_documents(split_docs, embedding=embeddings)
 
 # === Tools ===
 @tool
-def planet_distance_sun(planet_name: str) -> str:
+def PlanetDistanceSun(planet_name: str) -> str:
     """This tool return planets approximate distance from the Sun in Astronomical Units (AU)"""
     if "earth" in planet_name.lower():
         return "Earth is approximately 1 AU from the Sun."
@@ -42,7 +42,7 @@ def planet_distance_sun(planet_name: str) -> str:
         return f"Information about the distance of {planet_name} from the Sun is not available in this tool."
 
 @tool
-def planet_revolution_period(planet_name: str) -> str:
+def PlanetRevolutionPeriod(planet_name: str) -> str:
     """This tool returns planets approximate revolution periods around the Sun in Earth years"""
     if "earth" in planet_name.lower():
         return "Earth takes approximately 1 Earth year to revolve around the Sun."
@@ -56,7 +56,7 @@ def planet_revolution_period(planet_name: str) -> str:
         return f"Information about the revolution period of {planet_name} is not available in this tool."
 
 @tool
-def planet_general_info(planet_name: str) -> str:
+def PlanetGeneralInfo(planet_name: str) -> str:
     """This toll handles general planet queries that are not about the planet's distance from the Sun or its revolution period."""
     docs = db.similarity_search(planet_name)
     if docs:
@@ -65,14 +65,14 @@ def planet_general_info(planet_name: str) -> str:
         return f"Additional information for {planet_name} is not available in this tool."
 
 tools_list = [
-    planet_distance_sun,
-    planet_revolution_period,
-    planet_general_info
+    PlanetDistanceSun,
+    PlanetRevolutionPeriod,
+    PlanetGeneralInfo
     ]
 function_implementations = {
-    "PlanetDistanceSun": planet_distance_sun,
-    "PlanetRevolutionPeriod": planet_revolution_period,
-    "PlanetGeneralInfo": planet_general_info,
+    "PlanetDistanceSun": PlanetDistanceSun,
+    "PlanetRevolutionPeriod": PlanetRevolutionPeriod,
+    "PlanetGeneralInfo": PlanetGeneralInfo,
 }
 
 # === Bind tools ===
@@ -107,3 +107,4 @@ result = final_chain.invoke({"planet": query})
 print(result)
 print()
 print(final_chain)
+
